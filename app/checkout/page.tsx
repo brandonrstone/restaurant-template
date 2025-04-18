@@ -44,6 +44,11 @@ export default function CheckoutPage() {
     setSubmitting(false)
   }
 
+  // Handle removing an item from the cart
+  const handleRemoveItem = (itemId: number) => {
+    dispatch({ type: 'REMOVE_ITEM', id: itemId })
+  }
+
   return (
     <div className="max-w-2xl mx-auto py-16 px-4">
       <h2 className="text-2xl font-bold mb-6">Checkout</h2>
@@ -54,11 +59,17 @@ export default function CheckoutPage() {
         <>
           <ul className="mb-6 space-y-4">
             {state.items.map((item) => (
-              <li key={item.id} className="flex justify-between">
+              <li key={item.id} className="flex justify-between items-center">
                 <span>
                   {item.name} × {item.quantity}
                 </span>
                 <span>${(item.price * item.quantity).toFixed(2)}</span>
+                <button
+                  onClick={() => handleRemoveItem(item.id)}
+                  className="text-red-500 ml-4"
+                >
+                  Remove
+                </button>
               </li>
             ))}
           </ul>

@@ -11,7 +11,7 @@ type MenuItem = {
 
 export type CartItem = MenuItem & { quantity: number }
 
-type State = {
+type CartState = {
   items: CartItem[]
 }
 
@@ -22,17 +22,15 @@ type Action =
   | { type: 'SET_CART'; items: CartItem[] }
   | { type: 'RESTORE_CART'; payload: CartItem[] }
 
-export const CartContext = createContext<{ state: State; dispatch: React.Dispatch<Action> } | undefined>(undefined)
+export const CartContext = createContext<{ state: CartState; dispatch: React.Dispatch<Action> } | undefined>(undefined)
 
-const cartReducer = (state: State, action: Action): State => {
+const cartReducer = (state: CartState, action: Action): CartState => {
   switch (action.type) {
     case 'ADD_ITEM': {
       const existing = state.items.find(i => i.id === action.item.id)
       if (existing) {
         return {
-          items: state.items.map(i =>
-            i.id === action.item.id ? { ...i, quantity: i.quantity + 1 } : i
-          ),
+          items: state.items.map(i => i.id === action.item.id ? { ...i, quantity: i.quantity + 1 } : i)
         }
       }
       return {

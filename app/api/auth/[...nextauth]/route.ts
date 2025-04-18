@@ -1,9 +1,11 @@
-import NextAuth from 'next-auth'
+import NextAuth, { Session, User } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import bcrypt from 'bcrypt'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { prisma } from '@/app/lib/db'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import { AdapterUser } from 'next-auth/adapters'
+import { JWT } from 'next-auth/jwt'
 
 export const authOptions = {
   providers: [
@@ -30,10 +32,32 @@ export const authOptions = {
         const isValid = await bcrypt.compare(credentials.password, user.password);
         if (!isValid) return null;
 
-        return { id: user.id, email: user.email };
+        return {
+          id: user.id,
+          email: user.email,
+          isAdmin: user.isAdmin ?? false, // ✅ include this here
+        };
       }
     })
+
   ],
+  // Special functions that let you intercept and customize the authentication flow
+  callbacks: {
+    // The jwt callback is called right after a user signs in & every time a token is created or updated
+    async jwt({ token, user }: { token: JWT, user?: User | AdapterUser }) {
+      if (user) token.isAdmin = (user as AdapterUser).isAdmin ?? false
+      return token
+    },
+    // Runs when a session is created (i.e. someone visits a page and you're using useSession())
+    // It takes the JWT token and creates the session object
+    async session({ session, token }: { session: Session, token: JWT }) {
+      if (session?.user) {
+        session.user.isAdmin = token?.isAdmin ?? false;
+      }
+      return session;
+    }
+
+  },
   pages: { signIn: '/signin' },
   adapter: PrismaAdapter(prisma)
 };

@@ -25,19 +25,28 @@ export default function Orders() {
   useEffect(() => {
     if (session?.user) {
       fetch('/api/orders')
-        .then(async res => {
+        .then(async (res: Response) => {
           if (!res.ok) {
             const errorText = await res.text()
             console.error(`Failed to fetch orders: ${res.status} - ${errorText}`)
-            return []
+            return [] // Return empty array on error
           }
 
-          return res.json()
+          const data: Order[] = await res.json()
+          console.log('Fetched orders:', data) // Log the fetched orders
+          return data
         })
-        .then(setOrders)
+        .then((data: Order[]) => {
+          const uniqueOrders = data.filter((order, index, self) =>
+            index === self.findIndex((o) => o.id === order.id)
+          )
+          console.log('Unique orders:', uniqueOrders) // Log the unique orders after filtering
+          setOrders(uniqueOrders)
+        })
         .catch(console.error)
     }
   }, [session])
+
 
   // Handle the order status update
   const updateOrderStatus = async (orderId: string, status: string) => {

@@ -1,4 +1,6 @@
 // data/menu.ts
+export const menuCategories = ['all', 'main', 'dessert', 'drink']
+
 export const menuData = [
   {
     id: 1,

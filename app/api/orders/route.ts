@@ -33,9 +33,7 @@ export async function POST(request: Request) {
   return NextResponse.json(newOrder)
 }
 
-
 // When you fetch all orders for a logged-in user to display on /orders
-// GET orders
 export async function GET() {
   const session = await getServerSession(authOptions)
 
@@ -43,9 +41,16 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const orders = await prisma.order.findMany({ where: { user: { email: session.user.email } } })
+  // Only fetch submitted orders - this might be revised and changed entirely later
+  const orders = await prisma.order.findMany({
+    where: {
+      user: { email: session.user.email },
+      status: 'Submitted'
+    }
+  })
 
   return NextResponse.json(orders)
 }
+
 
 
