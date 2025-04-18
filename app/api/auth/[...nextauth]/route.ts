@@ -1,11 +1,16 @@
 import NextAuth, { Session, User } from 'next-auth'
-import GoogleProvider from 'next-auth/providers/google'
+import type { JWT } from 'next-auth/jwt'
+import type { AdapterUser } from 'next-auth/adapters'
 import bcrypt from 'bcrypt'
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import { prisma } from '@/app/lib/db'
+import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { AdapterUser } from 'next-auth/adapters'
-import { JWT } from 'next-auth/jwt'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
+
+import { prisma } from '@/app/lib/db'
+
+interface CustomJWT extends JWT {
+  isAdmin?: boolean
+}
 
 export const authOptions = {
   providers: [
@@ -50,13 +55,12 @@ export const authOptions = {
     },
     // Runs when a session is created (i.e. someone visits a page and you're using useSession())
     // It takes the JWT token and creates the session object
-    async session({ session, token }: { session: Session, token: JWT }) {
+    async session({ session, token }: { session: Session, token: CustomJWT }) {
       if (session?.user) {
         session.user.isAdmin = token?.isAdmin ?? false;
       }
       return session;
     }
-
   },
   pages: { signIn: '/signin' },
   adapter: PrismaAdapter(prisma)
