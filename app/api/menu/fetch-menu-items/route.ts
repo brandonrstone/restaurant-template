@@ -4,11 +4,10 @@ import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    const items = await prisma.menuItem.findMany({
-      orderBy: { createdAt: 'desc' }
-    })
+    const items = await prisma.menuItem.findMany({ orderBy: { createdAt: 'desc' } })
     return NextResponse.json(items)
   } catch (error) {
+    console.error(error)
     return NextResponse.error()
   }
 }

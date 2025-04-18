@@ -14,10 +14,7 @@ export async function POST(request: Request) {
 
   // Clean up saved cart
   await prisma.order.deleteMany({
-    where: {
-      user: { email: session.user.email },
-      status: 'Pending'
-    }
+    where: { user: { email: session.user.email }, status: 'Pending' }
   })
 
   // Save actual submitted order
@@ -37,16 +34,11 @@ export async function POST(request: Request) {
 export async function GET() {
   const session = await getServerSession(authOptions)
 
-  if (!session?.user?.email) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+  if (!session?.user?.email) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   // Only fetch submitted orders - this might be revised and changed entirely later
   const orders = await prisma.order.findMany({
-    where: {
-      user: { email: session.user.email },
-      status: 'Submitted'
-    }
+    where: { user: { email: session.user.email }, status: 'Submitted' }
   })
 
   return NextResponse.json(orders)
