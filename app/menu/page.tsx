@@ -4,8 +4,26 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 import { useCart } from '../hooks/useCart'
-import { MenuItem } from '../generated/prisma'
 import { menuCategories } from '../data/menu'
+import Image from 'next/image'
+import MenuItemModal from '../components/MenuItemModal'
+
+// ** Ask about prisma type generation
+export type MenuItem = {
+  id: number
+  name: string
+  description: string | null
+  price: number
+  category: string
+  image: string | null
+  createdAt: Date
+  updatedAt: Date
+  options?: {
+    id: number
+    name: string
+    price: number
+  }[]
+}
 
 export default function MenuPage() {
   const { state } = useCart()
@@ -89,41 +107,49 @@ export default function MenuPage() {
   )
 }
 
-type MenuItemCardProps = {
-  id: number
-  name: string
-  price: number
-  description?: string | null // Allow both null and undefined for description
-  image?: string | null // Allow both null and undefined for image
-}
-
-function MenuItemCard({ id, name, price, description, image }: MenuItemCardProps) {
-  const { dispatch } = useCart()
+export function MenuItemCard(item: MenuItem) {
+  const [modalIsOpen, setModalIsOpen] = useState(false)
 
   return (
-    <div className='border p-4 rounded shadow bg-white'>
-      {image && <img src={image} alt={name} className='w-full h-40 object-cover rounded mb-2' />}
-      <h2 className='text-xl font-semibold'>{name}</h2>
-      <p className='text-gray-600'>${price.toFixed(2)}</p>
-      {description && <p className='text-sm text-gray-500'>{description}</p>}
-      <button className='mt-2 px-4 py-1 bg-green-500 text-white rounded cursor-pointer' onClick={() => dispatch({ type: 'ADD_ITEM', item: { id, name, price } })}>
-        Add to Cart
-      </button>
-    </div>
+    <>
+      <div
+        onClick={() => setModalIsOpen(true)}
+        className="cursor-pointer border rounded-lg hover:shadow group overflow-hidden" // Added 'overflow-hidden' here
+      >
+        {/* Image component with dynamic src */}
+        <div className="relative w-full h-40 mb-2">
+          <Image
+            src={'/images/fish.jpg'}  // Fallback to a default image if no image is available
+            alt={item.name}
+            className="w-full h-full mb-2 object-cover group-hover:scale-[102.5%] transition-transform duration-300" // Adjust scale here
+            width={400} // Adjust width as needed
+            height={160} // Adjust height as needed
+          />
+        </div>
+        <h3 className="text-lg font-bold">{item.name}</h3>
+        <p className="text-sm text-gray-600">{item.description}</p>
+        <p className="font-medium mt-1">${item.price.toFixed(2)}</p>
+      </div>
+
+      {modalIsOpen && <MenuItemModal item={item} isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} />}
+    </>
   )
 }
 
+
+
+
 function MenuItemSkeleton() {
   // Causes hydration error - look into it
-  const nameWidth = Math.floor(Math.random() * 50) + 25
-  const descriptionWidth = Math.floor(Math.random() * 50) + 40
+  // const nameWidth = Math.floor(Math.random() * 50) + 25
+  // const descriptionWidth = Math.floor(Math.random() * 50) + 40
 
   return (
     <div className='border p-4 rounded shadow bg-white animate-pulse'>
       <div className='w-full h-40 bg-gray-200 rounded mb-2' />
-      <div className={`h-4.5 bg-gray-300 rounded mb-2`} style={{ width: `${nameWidth}%` }} />
+      <div className={`h-4.5 bg-gray-300 rounded mb-2`} /* style={{ width: `${nameWidth}%` }} */ />
       <div className='w-1/7 h-4 bg-gray-300 rounded mb-2' />
-      <div className='w-full h-3 bg-gray-200 rounded mb-3' style={{ width: `${descriptionWidth}%` }} />
+      <div className='w-full h-3 bg-gray-200 rounded mb-3' /* style={{ width: `${descriptionWidth}%` }} */ />
       <div className='w-1/3 h-8 bg-gray-300 rounded mt-2' />
     </div>
   )

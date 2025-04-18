@@ -11,7 +11,7 @@ export async function POST(req: Request) {
 
   const user = await prisma.user.findUnique({
     where: { email: session.user.email },
-    select: { isAdmin: true }
+    select: { isAdmin: true },
   })
 
   if (!user?.isAdmin) {
@@ -19,10 +19,25 @@ export async function POST(req: Request) {
   }
 
   try {
-    const data = await req.json()
-    const item = await prisma.menuItem.create({ data })
+    const body = await req.json()
+
+    const { options, ...menuItemData } = body
+
+    const item = await prisma.menuItem.create({
+      data: {
+        ...menuItemData,
+        options: {
+          create: options?.map((opt: any) => ({
+            label: opt.label,
+            value: opt.value,
+          })) || [],
+        },
+      },
+    })
+
     return Response.json(item)
   } catch (err) {
+    console.error('[ADD_ITEM_ERROR]', err)
     return new Response('Internal Server Error', { status: 500 })
   }
 }

@@ -66,4 +66,17 @@ export const menuData = [
     image: '/menu/iced-latte.jpg',
     category: 'drink',
   },
+  {
+    id: 9,
+    name: 'Ice Cream',
+    basePrice: 2.00,
+    quantity: 2,
+    selectedOptions: {
+      flavor: 'Vanilla',
+      size: 'Large',
+      extras: ['Sprinkles', 'Caramel Drizzle'],
+      notes: 'Extra cold please'
+    },
+    totalPrice: 4.50
+  }
 ]

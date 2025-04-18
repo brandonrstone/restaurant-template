@@ -43,6 +43,11 @@ export type Order = $Result.DefaultSelection<Prisma.$OrderPayload>
  * 
  */
 export type MenuItem = $Result.DefaultSelection<Prisma.$MenuItemPayload>
+/**
+ * Model MenuItemOption
+ * 
+ */
+export type MenuItemOption = $Result.DefaultSelection<Prisma.$MenuItemOptionPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -228,6 +233,16 @@ export class PrismaClient<
     * ```
     */
   get menuItem(): Prisma.MenuItemDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.menuItemOption`: Exposes CRUD operations for the **MenuItemOption** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MenuItemOptions
+    * const menuItemOptions = await prisma.menuItemOption.findMany()
+    * ```
+    */
+  get menuItemOption(): Prisma.MenuItemOptionDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -673,7 +688,8 @@ export namespace Prisma {
     Session: 'Session',
     VerificationToken: 'VerificationToken',
     Order: 'Order',
-    MenuItem: 'MenuItem'
+    MenuItem: 'MenuItem',
+    MenuItemOption: 'MenuItemOption'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -692,7 +708,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "account" | "session" | "verificationToken" | "order" | "menuItem"
+      modelProps: "user" | "account" | "session" | "verificationToken" | "order" | "menuItem" | "menuItemOption"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1140,6 +1156,80 @@ export namespace Prisma {
           }
         }
       }
+      MenuItemOption: {
+        payload: Prisma.$MenuItemOptionPayload<ExtArgs>
+        fields: Prisma.MenuItemOptionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MenuItemOptionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOptionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MenuItemOptionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOptionPayload>
+          }
+          findFirst: {
+            args: Prisma.MenuItemOptionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOptionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MenuItemOptionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOptionPayload>
+          }
+          findMany: {
+            args: Prisma.MenuItemOptionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOptionPayload>[]
+          }
+          create: {
+            args: Prisma.MenuItemOptionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOptionPayload>
+          }
+          createMany: {
+            args: Prisma.MenuItemOptionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MenuItemOptionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOptionPayload>[]
+          }
+          delete: {
+            args: Prisma.MenuItemOptionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOptionPayload>
+          }
+          update: {
+            args: Prisma.MenuItemOptionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOptionPayload>
+          }
+          deleteMany: {
+            args: Prisma.MenuItemOptionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MenuItemOptionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MenuItemOptionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOptionPayload>[]
+          }
+          upsert: {
+            args: Prisma.MenuItemOptionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MenuItemOptionPayload>
+          }
+          aggregate: {
+            args: Prisma.MenuItemOptionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMenuItemOption>
+          }
+          groupBy: {
+            args: Prisma.MenuItemOptionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MenuItemOptionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MenuItemOptionCountArgs<ExtArgs>
+            result: $Utils.Optional<MenuItemOptionCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1230,6 +1320,7 @@ export namespace Prisma {
     verificationToken?: VerificationTokenOmit
     order?: OrderOmit
     menuItem?: MenuItemOmit
+    menuItemOption?: MenuItemOptionOmit
   }
 
   /* Types for Logging */
@@ -1365,6 +1456,37 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountOrderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: OrderWhereInput
+  }
+
+
+  /**
+   * Count Type MenuItemCountOutputType
+   */
+
+  export type MenuItemCountOutputType = {
+    options: number
+  }
+
+  export type MenuItemCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    options?: boolean | MenuItemCountOutputTypeCountOptionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * MenuItemCountOutputType without action
+   */
+  export type MenuItemCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemCountOutputType
+     */
+    select?: MenuItemCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * MenuItemCountOutputType without action
+   */
+  export type MenuItemCountOutputTypeCountOptionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MenuItemOptionWhereInput
   }
 
 
@@ -7095,6 +7217,8 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    options?: boolean | MenuItem$optionsArgs<ExtArgs>
+    _count?: boolean | MenuItemCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["menuItem"]>
 
   export type MenuItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7131,10 +7255,18 @@ export namespace Prisma {
   }
 
   export type MenuItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "price" | "category" | "image" | "createdAt" | "updatedAt", ExtArgs["result"]["menuItem"]>
+  export type MenuItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    options?: boolean | MenuItem$optionsArgs<ExtArgs>
+    _count?: boolean | MenuItemCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type MenuItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type MenuItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $MenuItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "MenuItem"
-    objects: {}
+    objects: {
+      options: Prisma.$MenuItemOptionPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
@@ -7538,6 +7670,7 @@ export namespace Prisma {
    */
   export interface Prisma__MenuItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    options<T extends MenuItem$optionsArgs<ExtArgs> = {}>(args?: Subset<T, MenuItem$optionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MenuItemOptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7592,6 +7725,10 @@ export namespace Prisma {
      */
     omit?: MenuItemOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemInclude<ExtArgs> | null
+    /**
      * Filter, which MenuItem to fetch.
      */
     where: MenuItemWhereUniqueInput
@@ -7610,6 +7747,10 @@ export namespace Prisma {
      */
     omit?: MenuItemOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemInclude<ExtArgs> | null
+    /**
      * Filter, which MenuItem to fetch.
      */
     where: MenuItemWhereUniqueInput
@@ -7627,6 +7768,10 @@ export namespace Prisma {
      * Omit specific fields from the MenuItem
      */
     omit?: MenuItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemInclude<ExtArgs> | null
     /**
      * Filter, which MenuItem to fetch.
      */
@@ -7676,6 +7821,10 @@ export namespace Prisma {
      */
     omit?: MenuItemOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemInclude<ExtArgs> | null
+    /**
      * Filter, which MenuItem to fetch.
      */
     where?: MenuItemWhereInput
@@ -7724,6 +7873,10 @@ export namespace Prisma {
      */
     omit?: MenuItemOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemInclude<ExtArgs> | null
+    /**
      * Filter, which MenuItems to fetch.
      */
     where?: MenuItemWhereInput
@@ -7766,6 +7919,10 @@ export namespace Prisma {
      * Omit specific fields from the MenuItem
      */
     omit?: MenuItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemInclude<ExtArgs> | null
     /**
      * The data needed to create a MenuItem.
      */
@@ -7814,6 +7971,10 @@ export namespace Prisma {
      * Omit specific fields from the MenuItem
      */
     omit?: MenuItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemInclude<ExtArgs> | null
     /**
      * The data needed to update a MenuItem.
      */
@@ -7881,6 +8042,10 @@ export namespace Prisma {
      */
     omit?: MenuItemOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemInclude<ExtArgs> | null
+    /**
      * The filter to search for the MenuItem to update in case it exists.
      */
     where: MenuItemWhereUniqueInput
@@ -7907,6 +8072,10 @@ export namespace Prisma {
      */
     omit?: MenuItemOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemInclude<ExtArgs> | null
+    /**
      * Filter which MenuItem to delete.
      */
     where: MenuItemWhereUniqueInput
@@ -7927,6 +8096,30 @@ export namespace Prisma {
   }
 
   /**
+   * MenuItem.options
+   */
+  export type MenuItem$optionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOption
+     */
+    select?: MenuItemOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MenuItemOption
+     */
+    omit?: MenuItemOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemOptionInclude<ExtArgs> | null
+    where?: MenuItemOptionWhereInput
+    orderBy?: MenuItemOptionOrderByWithRelationInput | MenuItemOptionOrderByWithRelationInput[]
+    cursor?: MenuItemOptionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MenuItemOptionScalarFieldEnum | MenuItemOptionScalarFieldEnum[]
+  }
+
+  /**
    * MenuItem without action
    */
   export type MenuItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7938,6 +8131,1097 @@ export namespace Prisma {
      * Omit specific fields from the MenuItem
      */
     omit?: MenuItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MenuItemOption
+   */
+
+  export type AggregateMenuItemOption = {
+    _count: MenuItemOptionCountAggregateOutputType | null
+    _avg: MenuItemOptionAvgAggregateOutputType | null
+    _sum: MenuItemOptionSumAggregateOutputType | null
+    _min: MenuItemOptionMinAggregateOutputType | null
+    _max: MenuItemOptionMaxAggregateOutputType | null
+  }
+
+  export type MenuItemOptionAvgAggregateOutputType = {
+    id: number | null
+    price: number | null
+    itemId: number | null
+  }
+
+  export type MenuItemOptionSumAggregateOutputType = {
+    id: number | null
+    price: number | null
+    itemId: number | null
+  }
+
+  export type MenuItemOptionMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    price: number | null
+    itemId: number | null
+  }
+
+  export type MenuItemOptionMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    price: number | null
+    itemId: number | null
+  }
+
+  export type MenuItemOptionCountAggregateOutputType = {
+    id: number
+    name: number
+    price: number
+    itemId: number
+    _all: number
+  }
+
+
+  export type MenuItemOptionAvgAggregateInputType = {
+    id?: true
+    price?: true
+    itemId?: true
+  }
+
+  export type MenuItemOptionSumAggregateInputType = {
+    id?: true
+    price?: true
+    itemId?: true
+  }
+
+  export type MenuItemOptionMinAggregateInputType = {
+    id?: true
+    name?: true
+    price?: true
+    itemId?: true
+  }
+
+  export type MenuItemOptionMaxAggregateInputType = {
+    id?: true
+    name?: true
+    price?: true
+    itemId?: true
+  }
+
+  export type MenuItemOptionCountAggregateInputType = {
+    id?: true
+    name?: true
+    price?: true
+    itemId?: true
+    _all?: true
+  }
+
+  export type MenuItemOptionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MenuItemOption to aggregate.
+     */
+    where?: MenuItemOptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MenuItemOptions to fetch.
+     */
+    orderBy?: MenuItemOptionOrderByWithRelationInput | MenuItemOptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MenuItemOptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MenuItemOptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MenuItemOptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MenuItemOptions
+    **/
+    _count?: true | MenuItemOptionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MenuItemOptionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MenuItemOptionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MenuItemOptionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MenuItemOptionMaxAggregateInputType
+  }
+
+  export type GetMenuItemOptionAggregateType<T extends MenuItemOptionAggregateArgs> = {
+        [P in keyof T & keyof AggregateMenuItemOption]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMenuItemOption[P]>
+      : GetScalarType<T[P], AggregateMenuItemOption[P]>
+  }
+
+
+
+
+  export type MenuItemOptionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MenuItemOptionWhereInput
+    orderBy?: MenuItemOptionOrderByWithAggregationInput | MenuItemOptionOrderByWithAggregationInput[]
+    by: MenuItemOptionScalarFieldEnum[] | MenuItemOptionScalarFieldEnum
+    having?: MenuItemOptionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MenuItemOptionCountAggregateInputType | true
+    _avg?: MenuItemOptionAvgAggregateInputType
+    _sum?: MenuItemOptionSumAggregateInputType
+    _min?: MenuItemOptionMinAggregateInputType
+    _max?: MenuItemOptionMaxAggregateInputType
+  }
+
+  export type MenuItemOptionGroupByOutputType = {
+    id: number
+    name: string
+    price: number
+    itemId: number
+    _count: MenuItemOptionCountAggregateOutputType | null
+    _avg: MenuItemOptionAvgAggregateOutputType | null
+    _sum: MenuItemOptionSumAggregateOutputType | null
+    _min: MenuItemOptionMinAggregateOutputType | null
+    _max: MenuItemOptionMaxAggregateOutputType | null
+  }
+
+  type GetMenuItemOptionGroupByPayload<T extends MenuItemOptionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MenuItemOptionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MenuItemOptionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MenuItemOptionGroupByOutputType[P]>
+            : GetScalarType<T[P], MenuItemOptionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MenuItemOptionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    price?: boolean
+    itemId?: boolean
+    item?: boolean | MenuItemDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["menuItemOption"]>
+
+  export type MenuItemOptionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    price?: boolean
+    itemId?: boolean
+    item?: boolean | MenuItemDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["menuItemOption"]>
+
+  export type MenuItemOptionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    price?: boolean
+    itemId?: boolean
+    item?: boolean | MenuItemDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["menuItemOption"]>
+
+  export type MenuItemOptionSelectScalar = {
+    id?: boolean
+    name?: boolean
+    price?: boolean
+    itemId?: boolean
+  }
+
+  export type MenuItemOptionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "price" | "itemId", ExtArgs["result"]["menuItemOption"]>
+  export type MenuItemOptionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    item?: boolean | MenuItemDefaultArgs<ExtArgs>
+  }
+  export type MenuItemOptionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    item?: boolean | MenuItemDefaultArgs<ExtArgs>
+  }
+  export type MenuItemOptionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    item?: boolean | MenuItemDefaultArgs<ExtArgs>
+  }
+
+  export type $MenuItemOptionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MenuItemOption"
+    objects: {
+      item: Prisma.$MenuItemPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      price: number
+      itemId: number
+    }, ExtArgs["result"]["menuItemOption"]>
+    composites: {}
+  }
+
+  type MenuItemOptionGetPayload<S extends boolean | null | undefined | MenuItemOptionDefaultArgs> = $Result.GetResult<Prisma.$MenuItemOptionPayload, S>
+
+  type MenuItemOptionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MenuItemOptionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MenuItemOptionCountAggregateInputType | true
+    }
+
+  export interface MenuItemOptionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MenuItemOption'], meta: { name: 'MenuItemOption' } }
+    /**
+     * Find zero or one MenuItemOption that matches the filter.
+     * @param {MenuItemOptionFindUniqueArgs} args - Arguments to find a MenuItemOption
+     * @example
+     * // Get one MenuItemOption
+     * const menuItemOption = await prisma.menuItemOption.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MenuItemOptionFindUniqueArgs>(args: SelectSubset<T, MenuItemOptionFindUniqueArgs<ExtArgs>>): Prisma__MenuItemOptionClient<$Result.GetResult<Prisma.$MenuItemOptionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MenuItemOption that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MenuItemOptionFindUniqueOrThrowArgs} args - Arguments to find a MenuItemOption
+     * @example
+     * // Get one MenuItemOption
+     * const menuItemOption = await prisma.menuItemOption.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MenuItemOptionFindUniqueOrThrowArgs>(args: SelectSubset<T, MenuItemOptionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MenuItemOptionClient<$Result.GetResult<Prisma.$MenuItemOptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MenuItemOption that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuItemOptionFindFirstArgs} args - Arguments to find a MenuItemOption
+     * @example
+     * // Get one MenuItemOption
+     * const menuItemOption = await prisma.menuItemOption.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MenuItemOptionFindFirstArgs>(args?: SelectSubset<T, MenuItemOptionFindFirstArgs<ExtArgs>>): Prisma__MenuItemOptionClient<$Result.GetResult<Prisma.$MenuItemOptionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MenuItemOption that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuItemOptionFindFirstOrThrowArgs} args - Arguments to find a MenuItemOption
+     * @example
+     * // Get one MenuItemOption
+     * const menuItemOption = await prisma.menuItemOption.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MenuItemOptionFindFirstOrThrowArgs>(args?: SelectSubset<T, MenuItemOptionFindFirstOrThrowArgs<ExtArgs>>): Prisma__MenuItemOptionClient<$Result.GetResult<Prisma.$MenuItemOptionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MenuItemOptions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuItemOptionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MenuItemOptions
+     * const menuItemOptions = await prisma.menuItemOption.findMany()
+     * 
+     * // Get first 10 MenuItemOptions
+     * const menuItemOptions = await prisma.menuItemOption.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const menuItemOptionWithIdOnly = await prisma.menuItemOption.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MenuItemOptionFindManyArgs>(args?: SelectSubset<T, MenuItemOptionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MenuItemOptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MenuItemOption.
+     * @param {MenuItemOptionCreateArgs} args - Arguments to create a MenuItemOption.
+     * @example
+     * // Create one MenuItemOption
+     * const MenuItemOption = await prisma.menuItemOption.create({
+     *   data: {
+     *     // ... data to create a MenuItemOption
+     *   }
+     * })
+     * 
+     */
+    create<T extends MenuItemOptionCreateArgs>(args: SelectSubset<T, MenuItemOptionCreateArgs<ExtArgs>>): Prisma__MenuItemOptionClient<$Result.GetResult<Prisma.$MenuItemOptionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MenuItemOptions.
+     * @param {MenuItemOptionCreateManyArgs} args - Arguments to create many MenuItemOptions.
+     * @example
+     * // Create many MenuItemOptions
+     * const menuItemOption = await prisma.menuItemOption.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MenuItemOptionCreateManyArgs>(args?: SelectSubset<T, MenuItemOptionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MenuItemOptions and returns the data saved in the database.
+     * @param {MenuItemOptionCreateManyAndReturnArgs} args - Arguments to create many MenuItemOptions.
+     * @example
+     * // Create many MenuItemOptions
+     * const menuItemOption = await prisma.menuItemOption.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MenuItemOptions and only return the `id`
+     * const menuItemOptionWithIdOnly = await prisma.menuItemOption.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MenuItemOptionCreateManyAndReturnArgs>(args?: SelectSubset<T, MenuItemOptionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MenuItemOptionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MenuItemOption.
+     * @param {MenuItemOptionDeleteArgs} args - Arguments to delete one MenuItemOption.
+     * @example
+     * // Delete one MenuItemOption
+     * const MenuItemOption = await prisma.menuItemOption.delete({
+     *   where: {
+     *     // ... filter to delete one MenuItemOption
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MenuItemOptionDeleteArgs>(args: SelectSubset<T, MenuItemOptionDeleteArgs<ExtArgs>>): Prisma__MenuItemOptionClient<$Result.GetResult<Prisma.$MenuItemOptionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MenuItemOption.
+     * @param {MenuItemOptionUpdateArgs} args - Arguments to update one MenuItemOption.
+     * @example
+     * // Update one MenuItemOption
+     * const menuItemOption = await prisma.menuItemOption.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MenuItemOptionUpdateArgs>(args: SelectSubset<T, MenuItemOptionUpdateArgs<ExtArgs>>): Prisma__MenuItemOptionClient<$Result.GetResult<Prisma.$MenuItemOptionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MenuItemOptions.
+     * @param {MenuItemOptionDeleteManyArgs} args - Arguments to filter MenuItemOptions to delete.
+     * @example
+     * // Delete a few MenuItemOptions
+     * const { count } = await prisma.menuItemOption.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MenuItemOptionDeleteManyArgs>(args?: SelectSubset<T, MenuItemOptionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MenuItemOptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuItemOptionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MenuItemOptions
+     * const menuItemOption = await prisma.menuItemOption.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MenuItemOptionUpdateManyArgs>(args: SelectSubset<T, MenuItemOptionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MenuItemOptions and returns the data updated in the database.
+     * @param {MenuItemOptionUpdateManyAndReturnArgs} args - Arguments to update many MenuItemOptions.
+     * @example
+     * // Update many MenuItemOptions
+     * const menuItemOption = await prisma.menuItemOption.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MenuItemOptions and only return the `id`
+     * const menuItemOptionWithIdOnly = await prisma.menuItemOption.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MenuItemOptionUpdateManyAndReturnArgs>(args: SelectSubset<T, MenuItemOptionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MenuItemOptionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MenuItemOption.
+     * @param {MenuItemOptionUpsertArgs} args - Arguments to update or create a MenuItemOption.
+     * @example
+     * // Update or create a MenuItemOption
+     * const menuItemOption = await prisma.menuItemOption.upsert({
+     *   create: {
+     *     // ... data to create a MenuItemOption
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MenuItemOption we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MenuItemOptionUpsertArgs>(args: SelectSubset<T, MenuItemOptionUpsertArgs<ExtArgs>>): Prisma__MenuItemOptionClient<$Result.GetResult<Prisma.$MenuItemOptionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MenuItemOptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuItemOptionCountArgs} args - Arguments to filter MenuItemOptions to count.
+     * @example
+     * // Count the number of MenuItemOptions
+     * const count = await prisma.menuItemOption.count({
+     *   where: {
+     *     // ... the filter for the MenuItemOptions we want to count
+     *   }
+     * })
+    **/
+    count<T extends MenuItemOptionCountArgs>(
+      args?: Subset<T, MenuItemOptionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MenuItemOptionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MenuItemOption.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuItemOptionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MenuItemOptionAggregateArgs>(args: Subset<T, MenuItemOptionAggregateArgs>): Prisma.PrismaPromise<GetMenuItemOptionAggregateType<T>>
+
+    /**
+     * Group by MenuItemOption.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuItemOptionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MenuItemOptionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MenuItemOptionGroupByArgs['orderBy'] }
+        : { orderBy?: MenuItemOptionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MenuItemOptionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMenuItemOptionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MenuItemOption model
+   */
+  readonly fields: MenuItemOptionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MenuItemOption.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MenuItemOptionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    item<T extends MenuItemDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MenuItemDefaultArgs<ExtArgs>>): Prisma__MenuItemClient<$Result.GetResult<Prisma.$MenuItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MenuItemOption model
+   */
+  interface MenuItemOptionFieldRefs {
+    readonly id: FieldRef<"MenuItemOption", 'Int'>
+    readonly name: FieldRef<"MenuItemOption", 'String'>
+    readonly price: FieldRef<"MenuItemOption", 'Float'>
+    readonly itemId: FieldRef<"MenuItemOption", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MenuItemOption findUnique
+   */
+  export type MenuItemOptionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOption
+     */
+    select?: MenuItemOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MenuItemOption
+     */
+    omit?: MenuItemOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which MenuItemOption to fetch.
+     */
+    where: MenuItemOptionWhereUniqueInput
+  }
+
+  /**
+   * MenuItemOption findUniqueOrThrow
+   */
+  export type MenuItemOptionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOption
+     */
+    select?: MenuItemOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MenuItemOption
+     */
+    omit?: MenuItemOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which MenuItemOption to fetch.
+     */
+    where: MenuItemOptionWhereUniqueInput
+  }
+
+  /**
+   * MenuItemOption findFirst
+   */
+  export type MenuItemOptionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOption
+     */
+    select?: MenuItemOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MenuItemOption
+     */
+    omit?: MenuItemOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which MenuItemOption to fetch.
+     */
+    where?: MenuItemOptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MenuItemOptions to fetch.
+     */
+    orderBy?: MenuItemOptionOrderByWithRelationInput | MenuItemOptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MenuItemOptions.
+     */
+    cursor?: MenuItemOptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MenuItemOptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MenuItemOptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MenuItemOptions.
+     */
+    distinct?: MenuItemOptionScalarFieldEnum | MenuItemOptionScalarFieldEnum[]
+  }
+
+  /**
+   * MenuItemOption findFirstOrThrow
+   */
+  export type MenuItemOptionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOption
+     */
+    select?: MenuItemOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MenuItemOption
+     */
+    omit?: MenuItemOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which MenuItemOption to fetch.
+     */
+    where?: MenuItemOptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MenuItemOptions to fetch.
+     */
+    orderBy?: MenuItemOptionOrderByWithRelationInput | MenuItemOptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MenuItemOptions.
+     */
+    cursor?: MenuItemOptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MenuItemOptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MenuItemOptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MenuItemOptions.
+     */
+    distinct?: MenuItemOptionScalarFieldEnum | MenuItemOptionScalarFieldEnum[]
+  }
+
+  /**
+   * MenuItemOption findMany
+   */
+  export type MenuItemOptionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOption
+     */
+    select?: MenuItemOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MenuItemOption
+     */
+    omit?: MenuItemOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which MenuItemOptions to fetch.
+     */
+    where?: MenuItemOptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MenuItemOptions to fetch.
+     */
+    orderBy?: MenuItemOptionOrderByWithRelationInput | MenuItemOptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MenuItemOptions.
+     */
+    cursor?: MenuItemOptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MenuItemOptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MenuItemOptions.
+     */
+    skip?: number
+    distinct?: MenuItemOptionScalarFieldEnum | MenuItemOptionScalarFieldEnum[]
+  }
+
+  /**
+   * MenuItemOption create
+   */
+  export type MenuItemOptionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOption
+     */
+    select?: MenuItemOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MenuItemOption
+     */
+    omit?: MenuItemOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemOptionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MenuItemOption.
+     */
+    data: XOR<MenuItemOptionCreateInput, MenuItemOptionUncheckedCreateInput>
+  }
+
+  /**
+   * MenuItemOption createMany
+   */
+  export type MenuItemOptionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MenuItemOptions.
+     */
+    data: MenuItemOptionCreateManyInput | MenuItemOptionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MenuItemOption createManyAndReturn
+   */
+  export type MenuItemOptionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOption
+     */
+    select?: MenuItemOptionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MenuItemOption
+     */
+    omit?: MenuItemOptionOmit<ExtArgs> | null
+    /**
+     * The data used to create many MenuItemOptions.
+     */
+    data: MenuItemOptionCreateManyInput | MenuItemOptionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemOptionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MenuItemOption update
+   */
+  export type MenuItemOptionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOption
+     */
+    select?: MenuItemOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MenuItemOption
+     */
+    omit?: MenuItemOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemOptionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MenuItemOption.
+     */
+    data: XOR<MenuItemOptionUpdateInput, MenuItemOptionUncheckedUpdateInput>
+    /**
+     * Choose, which MenuItemOption to update.
+     */
+    where: MenuItemOptionWhereUniqueInput
+  }
+
+  /**
+   * MenuItemOption updateMany
+   */
+  export type MenuItemOptionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MenuItemOptions.
+     */
+    data: XOR<MenuItemOptionUpdateManyMutationInput, MenuItemOptionUncheckedUpdateManyInput>
+    /**
+     * Filter which MenuItemOptions to update
+     */
+    where?: MenuItemOptionWhereInput
+    /**
+     * Limit how many MenuItemOptions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MenuItemOption updateManyAndReturn
+   */
+  export type MenuItemOptionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOption
+     */
+    select?: MenuItemOptionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MenuItemOption
+     */
+    omit?: MenuItemOptionOmit<ExtArgs> | null
+    /**
+     * The data used to update MenuItemOptions.
+     */
+    data: XOR<MenuItemOptionUpdateManyMutationInput, MenuItemOptionUncheckedUpdateManyInput>
+    /**
+     * Filter which MenuItemOptions to update
+     */
+    where?: MenuItemOptionWhereInput
+    /**
+     * Limit how many MenuItemOptions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemOptionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MenuItemOption upsert
+   */
+  export type MenuItemOptionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOption
+     */
+    select?: MenuItemOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MenuItemOption
+     */
+    omit?: MenuItemOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemOptionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MenuItemOption to update in case it exists.
+     */
+    where: MenuItemOptionWhereUniqueInput
+    /**
+     * In case the MenuItemOption found by the `where` argument doesn't exist, create a new MenuItemOption with this data.
+     */
+    create: XOR<MenuItemOptionCreateInput, MenuItemOptionUncheckedCreateInput>
+    /**
+     * In case the MenuItemOption was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MenuItemOptionUpdateInput, MenuItemOptionUncheckedUpdateInput>
+  }
+
+  /**
+   * MenuItemOption delete
+   */
+  export type MenuItemOptionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOption
+     */
+    select?: MenuItemOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MenuItemOption
+     */
+    omit?: MenuItemOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemOptionInclude<ExtArgs> | null
+    /**
+     * Filter which MenuItemOption to delete.
+     */
+    where: MenuItemOptionWhereUniqueInput
+  }
+
+  /**
+   * MenuItemOption deleteMany
+   */
+  export type MenuItemOptionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MenuItemOptions to delete
+     */
+    where?: MenuItemOptionWhereInput
+    /**
+     * Limit how many MenuItemOptions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MenuItemOption without action
+   */
+  export type MenuItemOptionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MenuItemOption
+     */
+    select?: MenuItemOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MenuItemOption
+     */
+    omit?: MenuItemOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MenuItemOptionInclude<ExtArgs> | null
   }
 
 
@@ -8032,6 +9316,16 @@ export namespace Prisma {
   };
 
   export type MenuItemScalarFieldEnum = (typeof MenuItemScalarFieldEnum)[keyof typeof MenuItemScalarFieldEnum]
+
+
+  export const MenuItemOptionScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    price: 'price',
+    itemId: 'itemId'
+  };
+
+  export type MenuItemOptionScalarFieldEnum = (typeof MenuItemOptionScalarFieldEnum)[keyof typeof MenuItemOptionScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -8475,6 +9769,7 @@ export namespace Prisma {
     image?: StringNullableFilter<"MenuItem"> | string | null
     createdAt?: DateTimeFilter<"MenuItem"> | Date | string
     updatedAt?: DateTimeFilter<"MenuItem"> | Date | string
+    options?: MenuItemOptionListRelationFilter
   }
 
   export type MenuItemOrderByWithRelationInput = {
@@ -8486,6 +9781,7 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    options?: MenuItemOptionOrderByRelationAggregateInput
   }
 
   export type MenuItemWhereUniqueInput = Prisma.AtLeast<{
@@ -8500,6 +9796,7 @@ export namespace Prisma {
     image?: StringNullableFilter<"MenuItem"> | string | null
     createdAt?: DateTimeFilter<"MenuItem"> | Date | string
     updatedAt?: DateTimeFilter<"MenuItem"> | Date | string
+    options?: MenuItemOptionListRelationFilter
   }, "id">
 
   export type MenuItemOrderByWithAggregationInput = {
@@ -8530,6 +9827,58 @@ export namespace Prisma {
     image?: StringNullableWithAggregatesFilter<"MenuItem"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"MenuItem"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"MenuItem"> | Date | string
+  }
+
+  export type MenuItemOptionWhereInput = {
+    AND?: MenuItemOptionWhereInput | MenuItemOptionWhereInput[]
+    OR?: MenuItemOptionWhereInput[]
+    NOT?: MenuItemOptionWhereInput | MenuItemOptionWhereInput[]
+    id?: IntFilter<"MenuItemOption"> | number
+    name?: StringFilter<"MenuItemOption"> | string
+    price?: FloatFilter<"MenuItemOption"> | number
+    itemId?: IntFilter<"MenuItemOption"> | number
+    item?: XOR<MenuItemScalarRelationFilter, MenuItemWhereInput>
+  }
+
+  export type MenuItemOptionOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    price?: SortOrder
+    itemId?: SortOrder
+    item?: MenuItemOrderByWithRelationInput
+  }
+
+  export type MenuItemOptionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: MenuItemOptionWhereInput | MenuItemOptionWhereInput[]
+    OR?: MenuItemOptionWhereInput[]
+    NOT?: MenuItemOptionWhereInput | MenuItemOptionWhereInput[]
+    name?: StringFilter<"MenuItemOption"> | string
+    price?: FloatFilter<"MenuItemOption"> | number
+    itemId?: IntFilter<"MenuItemOption"> | number
+    item?: XOR<MenuItemScalarRelationFilter, MenuItemWhereInput>
+  }, "id">
+
+  export type MenuItemOptionOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    price?: SortOrder
+    itemId?: SortOrder
+    _count?: MenuItemOptionCountOrderByAggregateInput
+    _avg?: MenuItemOptionAvgOrderByAggregateInput
+    _max?: MenuItemOptionMaxOrderByAggregateInput
+    _min?: MenuItemOptionMinOrderByAggregateInput
+    _sum?: MenuItemOptionSumOrderByAggregateInput
+  }
+
+  export type MenuItemOptionScalarWhereWithAggregatesInput = {
+    AND?: MenuItemOptionScalarWhereWithAggregatesInput | MenuItemOptionScalarWhereWithAggregatesInput[]
+    OR?: MenuItemOptionScalarWhereWithAggregatesInput[]
+    NOT?: MenuItemOptionScalarWhereWithAggregatesInput | MenuItemOptionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"MenuItemOption"> | number
+    name?: StringWithAggregatesFilter<"MenuItemOption"> | string
+    price?: FloatWithAggregatesFilter<"MenuItemOption"> | number
+    itemId?: IntWithAggregatesFilter<"MenuItemOption"> | number
   }
 
   export type UserCreateInput = {
@@ -8896,6 +10245,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    options?: MenuItemOptionCreateNestedManyWithoutItemInput
   }
 
   export type MenuItemUncheckedCreateInput = {
@@ -8907,6 +10257,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    options?: MenuItemOptionUncheckedCreateNestedManyWithoutItemInput
   }
 
   export type MenuItemUpdateInput = {
@@ -8917,6 +10268,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    options?: MenuItemOptionUpdateManyWithoutItemNestedInput
   }
 
   export type MenuItemUncheckedUpdateInput = {
@@ -8928,6 +10280,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    options?: MenuItemOptionUncheckedUpdateManyWithoutItemNestedInput
   }
 
   export type MenuItemCreateManyInput = {
@@ -8960,6 +10313,51 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MenuItemOptionCreateInput = {
+    name: string
+    price: number
+    item: MenuItemCreateNestedOneWithoutOptionsInput
+  }
+
+  export type MenuItemOptionUncheckedCreateInput = {
+    id?: number
+    name: string
+    price: number
+    itemId: number
+  }
+
+  export type MenuItemOptionUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    item?: MenuItemUpdateOneRequiredWithoutOptionsNestedInput
+  }
+
+  export type MenuItemOptionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    itemId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type MenuItemOptionCreateManyInput = {
+    id?: number
+    name: string
+    price: number
+    itemId: number
+  }
+
+  export type MenuItemOptionUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type MenuItemOptionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    itemId?: IntFieldUpdateOperationsInput | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -9390,6 +10788,16 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type MenuItemOptionListRelationFilter = {
+    every?: MenuItemOptionWhereInput
+    some?: MenuItemOptionWhereInput
+    none?: MenuItemOptionWhereInput
+  }
+
+  export type MenuItemOptionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type MenuItemCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -9431,6 +10839,44 @@ export namespace Prisma {
   export type MenuItemSumOrderByAggregateInput = {
     id?: SortOrder
     price?: SortOrder
+  }
+
+  export type MenuItemScalarRelationFilter = {
+    is?: MenuItemWhereInput
+    isNot?: MenuItemWhereInput
+  }
+
+  export type MenuItemOptionCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    price?: SortOrder
+    itemId?: SortOrder
+  }
+
+  export type MenuItemOptionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    price?: SortOrder
+    itemId?: SortOrder
+  }
+
+  export type MenuItemOptionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    price?: SortOrder
+    itemId?: SortOrder
+  }
+
+  export type MenuItemOptionMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    price?: SortOrder
+    itemId?: SortOrder
+  }
+
+  export type MenuItemOptionSumOrderByAggregateInput = {
+    id?: SortOrder
+    price?: SortOrder
+    itemId?: SortOrder
   }
 
   export type AccountCreateNestedManyWithoutUserInput = {
@@ -9643,6 +11089,62 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type MenuItemOptionCreateNestedManyWithoutItemInput = {
+    create?: XOR<MenuItemOptionCreateWithoutItemInput, MenuItemOptionUncheckedCreateWithoutItemInput> | MenuItemOptionCreateWithoutItemInput[] | MenuItemOptionUncheckedCreateWithoutItemInput[]
+    connectOrCreate?: MenuItemOptionCreateOrConnectWithoutItemInput | MenuItemOptionCreateOrConnectWithoutItemInput[]
+    createMany?: MenuItemOptionCreateManyItemInputEnvelope
+    connect?: MenuItemOptionWhereUniqueInput | MenuItemOptionWhereUniqueInput[]
+  }
+
+  export type MenuItemOptionUncheckedCreateNestedManyWithoutItemInput = {
+    create?: XOR<MenuItemOptionCreateWithoutItemInput, MenuItemOptionUncheckedCreateWithoutItemInput> | MenuItemOptionCreateWithoutItemInput[] | MenuItemOptionUncheckedCreateWithoutItemInput[]
+    connectOrCreate?: MenuItemOptionCreateOrConnectWithoutItemInput | MenuItemOptionCreateOrConnectWithoutItemInput[]
+    createMany?: MenuItemOptionCreateManyItemInputEnvelope
+    connect?: MenuItemOptionWhereUniqueInput | MenuItemOptionWhereUniqueInput[]
+  }
+
+  export type MenuItemOptionUpdateManyWithoutItemNestedInput = {
+    create?: XOR<MenuItemOptionCreateWithoutItemInput, MenuItemOptionUncheckedCreateWithoutItemInput> | MenuItemOptionCreateWithoutItemInput[] | MenuItemOptionUncheckedCreateWithoutItemInput[]
+    connectOrCreate?: MenuItemOptionCreateOrConnectWithoutItemInput | MenuItemOptionCreateOrConnectWithoutItemInput[]
+    upsert?: MenuItemOptionUpsertWithWhereUniqueWithoutItemInput | MenuItemOptionUpsertWithWhereUniqueWithoutItemInput[]
+    createMany?: MenuItemOptionCreateManyItemInputEnvelope
+    set?: MenuItemOptionWhereUniqueInput | MenuItemOptionWhereUniqueInput[]
+    disconnect?: MenuItemOptionWhereUniqueInput | MenuItemOptionWhereUniqueInput[]
+    delete?: MenuItemOptionWhereUniqueInput | MenuItemOptionWhereUniqueInput[]
+    connect?: MenuItemOptionWhereUniqueInput | MenuItemOptionWhereUniqueInput[]
+    update?: MenuItemOptionUpdateWithWhereUniqueWithoutItemInput | MenuItemOptionUpdateWithWhereUniqueWithoutItemInput[]
+    updateMany?: MenuItemOptionUpdateManyWithWhereWithoutItemInput | MenuItemOptionUpdateManyWithWhereWithoutItemInput[]
+    deleteMany?: MenuItemOptionScalarWhereInput | MenuItemOptionScalarWhereInput[]
+  }
+
+  export type MenuItemOptionUncheckedUpdateManyWithoutItemNestedInput = {
+    create?: XOR<MenuItemOptionCreateWithoutItemInput, MenuItemOptionUncheckedCreateWithoutItemInput> | MenuItemOptionCreateWithoutItemInput[] | MenuItemOptionUncheckedCreateWithoutItemInput[]
+    connectOrCreate?: MenuItemOptionCreateOrConnectWithoutItemInput | MenuItemOptionCreateOrConnectWithoutItemInput[]
+    upsert?: MenuItemOptionUpsertWithWhereUniqueWithoutItemInput | MenuItemOptionUpsertWithWhereUniqueWithoutItemInput[]
+    createMany?: MenuItemOptionCreateManyItemInputEnvelope
+    set?: MenuItemOptionWhereUniqueInput | MenuItemOptionWhereUniqueInput[]
+    disconnect?: MenuItemOptionWhereUniqueInput | MenuItemOptionWhereUniqueInput[]
+    delete?: MenuItemOptionWhereUniqueInput | MenuItemOptionWhereUniqueInput[]
+    connect?: MenuItemOptionWhereUniqueInput | MenuItemOptionWhereUniqueInput[]
+    update?: MenuItemOptionUpdateWithWhereUniqueWithoutItemInput | MenuItemOptionUpdateWithWhereUniqueWithoutItemInput[]
+    updateMany?: MenuItemOptionUpdateManyWithWhereWithoutItemInput | MenuItemOptionUpdateManyWithWhereWithoutItemInput[]
+    deleteMany?: MenuItemOptionScalarWhereInput | MenuItemOptionScalarWhereInput[]
+  }
+
+  export type MenuItemCreateNestedOneWithoutOptionsInput = {
+    create?: XOR<MenuItemCreateWithoutOptionsInput, MenuItemUncheckedCreateWithoutOptionsInput>
+    connectOrCreate?: MenuItemCreateOrConnectWithoutOptionsInput
+    connect?: MenuItemWhereUniqueInput
+  }
+
+  export type MenuItemUpdateOneRequiredWithoutOptionsNestedInput = {
+    create?: XOR<MenuItemCreateWithoutOptionsInput, MenuItemUncheckedCreateWithoutOptionsInput>
+    connectOrCreate?: MenuItemCreateOrConnectWithoutOptionsInput
+    upsert?: MenuItemUpsertWithoutOptionsInput
+    connect?: MenuItemWhereUniqueInput
+    update?: XOR<XOR<MenuItemUpdateToOneWithWhereWithoutOptionsInput, MenuItemUpdateWithoutOptionsInput>, MenuItemUncheckedUpdateWithoutOptionsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -10254,6 +11756,111 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
+  export type MenuItemOptionCreateWithoutItemInput = {
+    name: string
+    price: number
+  }
+
+  export type MenuItemOptionUncheckedCreateWithoutItemInput = {
+    id?: number
+    name: string
+    price: number
+  }
+
+  export type MenuItemOptionCreateOrConnectWithoutItemInput = {
+    where: MenuItemOptionWhereUniqueInput
+    create: XOR<MenuItemOptionCreateWithoutItemInput, MenuItemOptionUncheckedCreateWithoutItemInput>
+  }
+
+  export type MenuItemOptionCreateManyItemInputEnvelope = {
+    data: MenuItemOptionCreateManyItemInput | MenuItemOptionCreateManyItemInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type MenuItemOptionUpsertWithWhereUniqueWithoutItemInput = {
+    where: MenuItemOptionWhereUniqueInput
+    update: XOR<MenuItemOptionUpdateWithoutItemInput, MenuItemOptionUncheckedUpdateWithoutItemInput>
+    create: XOR<MenuItemOptionCreateWithoutItemInput, MenuItemOptionUncheckedCreateWithoutItemInput>
+  }
+
+  export type MenuItemOptionUpdateWithWhereUniqueWithoutItemInput = {
+    where: MenuItemOptionWhereUniqueInput
+    data: XOR<MenuItemOptionUpdateWithoutItemInput, MenuItemOptionUncheckedUpdateWithoutItemInput>
+  }
+
+  export type MenuItemOptionUpdateManyWithWhereWithoutItemInput = {
+    where: MenuItemOptionScalarWhereInput
+    data: XOR<MenuItemOptionUpdateManyMutationInput, MenuItemOptionUncheckedUpdateManyWithoutItemInput>
+  }
+
+  export type MenuItemOptionScalarWhereInput = {
+    AND?: MenuItemOptionScalarWhereInput | MenuItemOptionScalarWhereInput[]
+    OR?: MenuItemOptionScalarWhereInput[]
+    NOT?: MenuItemOptionScalarWhereInput | MenuItemOptionScalarWhereInput[]
+    id?: IntFilter<"MenuItemOption"> | number
+    name?: StringFilter<"MenuItemOption"> | string
+    price?: FloatFilter<"MenuItemOption"> | number
+    itemId?: IntFilter<"MenuItemOption"> | number
+  }
+
+  export type MenuItemCreateWithoutOptionsInput = {
+    name: string
+    description?: string | null
+    price: number
+    category: string
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MenuItemUncheckedCreateWithoutOptionsInput = {
+    id?: number
+    name: string
+    description?: string | null
+    price: number
+    category: string
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MenuItemCreateOrConnectWithoutOptionsInput = {
+    where: MenuItemWhereUniqueInput
+    create: XOR<MenuItemCreateWithoutOptionsInput, MenuItemUncheckedCreateWithoutOptionsInput>
+  }
+
+  export type MenuItemUpsertWithoutOptionsInput = {
+    update: XOR<MenuItemUpdateWithoutOptionsInput, MenuItemUncheckedUpdateWithoutOptionsInput>
+    create: XOR<MenuItemCreateWithoutOptionsInput, MenuItemUncheckedCreateWithoutOptionsInput>
+    where?: MenuItemWhereInput
+  }
+
+  export type MenuItemUpdateToOneWithWhereWithoutOptionsInput = {
+    where?: MenuItemWhereInput
+    data: XOR<MenuItemUpdateWithoutOptionsInput, MenuItemUncheckedUpdateWithoutOptionsInput>
+  }
+
+  export type MenuItemUpdateWithoutOptionsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MenuItemUncheckedUpdateWithoutOptionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type AccountCreateManyUserInput = {
     id?: string
     type: string
@@ -10367,6 +11974,29 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MenuItemOptionCreateManyItemInput = {
+    id?: number
+    name: string
+    price: number
+  }
+
+  export type MenuItemOptionUpdateWithoutItemInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type MenuItemOptionUncheckedUpdateWithoutItemInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type MenuItemOptionUncheckedUpdateManyWithoutItemInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
   }
 
 

@@ -2,12 +2,7 @@
 
 import { useSession } from 'next-auth/react'
 import { createContext, useReducer, useEffect } from 'react'
-
-type MenuItem = {
-  id: number
-  name: string
-  price: number
-}
+import { MenuItem } from '../menu/page'
 
 export type CartItem = MenuItem & { quantity: number }
 
@@ -27,20 +22,31 @@ export const CartContext = createContext<{ state: CartState; dispatch: React.Dis
 const cartReducer = (state: CartState, action: Action): CartState => {
   switch (action.type) {
     case 'ADD_ITEM': {
-      const existing = state.items.find(i => i.id === action.item.id)
+      const existing = state.items.find(i =>
+        i.id === action.item.id &&
+        JSON.stringify(i.options || []) === JSON.stringify(action.item.options || [])
+      )
+
       if (existing) {
         return {
-          items: state.items.map(i => i.id === action.item.id ? { ...i, quantity: i.quantity + 1 } : i)
+          items: state.items.map(i =>
+            i.id === action.item.id &&
+              JSON.stringify(i.options || []) === JSON.stringify(action.item.options || [])
+              ? { ...i, quantity: i.quantity + 1 }
+              : i
+          )
         }
       }
+
       return {
         items: [...state.items, { ...action.item, quantity: 1 }],
       }
     }
 
+
     case 'REMOVE_ITEM':
       return {
-        items: state.items.filter(i => i.id !== action.id),
+        items: state.items.filter(i => i.id !== action.id)
       }
 
     case 'CLEAR_CART':
@@ -89,10 +95,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   // 4. Save to DB if user is logged in and cart changes
   useEffect(() => {
-    if (session?.user && state.items.length > 0) {
+    if (session?.user) {
       const saveCart = async () => {
         const total = state.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
-        await fetch('/api/save-cart', {
+        await fetch('/api/cart/save-items', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ items: state.items, total }),
@@ -102,11 +108,12 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [state.items, session])
 
+
   // 5. Restore from DB if user logs in
   useEffect(() => {
     if (session?.user) {
       const loadCart = async () => {
-        const res = await fetch('/api/restore-cart')
+        const res = await fetch('/api/cart/restore-items')
         if (res.ok) {
           const data = await res.json()
           if (data.items?.length) {

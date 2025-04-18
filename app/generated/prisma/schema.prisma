@@ -79,12 +79,21 @@ model Order {
 }
 
 model MenuItem {
-  id          Int      @id @default(autoincrement())
+  id          Int              @id @default(autoincrement())
   name        String
   description String?
   price       Float
-  category    String // e.g. "Main", "Drink", "Dessert"
-  image       String? // URL to a photo
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  category    String
+  image       String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  options     MenuItemOption[] // relation to options
+}
+
+model MenuItemOption {
+  id     Int      @id @default(autoincrement())
+  name   String // e.g., "Vanilla", "Large"
+  price  Float // e.g., additional cost like 0.50
+  item   MenuItem @relation(fields: [itemId], references: [id])
+  itemId Int
 }
