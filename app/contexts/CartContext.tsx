@@ -26,7 +26,6 @@ const cartReducer = (state: CartState, action: Action): CartState => {
         i.id === action.item.id &&
         JSON.stringify(i.options || []) === JSON.stringify(action.item.options || [])
       )
-
       if (existing) {
         return {
           items: state.items.map(i =>
@@ -42,22 +41,16 @@ const cartReducer = (state: CartState, action: Action): CartState => {
         items: [...state.items, { ...action.item, quantity: 1 }],
       }
     }
-
-
     case 'REMOVE_ITEM':
       return {
         items: state.items.filter(i => i.id !== action.id)
       }
-
     case 'CLEAR_CART':
       return { items: [] }
-
     case 'SET_CART':
       return { items: action.items }
-
     case 'RESTORE_CART':
       return { items: action.payload }
-
     default:
       return state
   }

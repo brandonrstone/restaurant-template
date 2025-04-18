@@ -3,44 +3,54 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-const menuCategories = ['main', 'dessert', 'drink']
+type MenuItemFormData = {
+  name: string
+  description: string
+  price: string
+  category: string
+  image: string
+}
 
-type Option = {
-  label: string
-  value: string
+const menuCategories = ['main', 'dessert', 'drink'] as const
+const formFields: (keyof MenuItemFormData)[] = ['name', 'description', 'price', 'image']
+
+type MenuItemOption = {
+  name: string
+  price: string
 }
 
 export default function AddMenuItem() {
   const router = useRouter()
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<MenuItemFormData>({
     name: '',
     description: '',
     price: '',
     category: '',
-    image: '',
+    image: ''
   })
 
-  // Set options to an empty array by default
-  const [options, setOptions] = useState<Option[]>([{ label: '', value: '' }])
+  const [options, setOptions] = useState<MenuItemOption[]>([{ name: '', price: '' }])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    // Filter out options with empty label or value
-    const filteredOptions = options.filter(opt => opt.label && opt.value)
+    const filteredOptions = options
+      .filter(opt => opt.name && opt.price)
+      .map(opt => ({
+        name: opt.name,
+        price: parseFloat(opt.price),
+      }))
 
-    // Prepare data for POST request
     const res = await fetch('/api/admin/add-item', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         ...form,
-        price: parseFloat(form.price),  // Ensure price is a number
-        options: filteredOptions.length > 0 ? filteredOptions : undefined, // Make options optional
+        price: parseFloat(form.price),
+        options: filteredOptions.length > 0 ? filteredOptions : undefined,
       }),
     })
 
-    // Handle response and redirect if successful
     if (res.ok) {
       router.push('/admin')
     } else {
@@ -52,19 +62,17 @@ export default function AddMenuItem() {
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto py-10 space-y-4">
       <h1 className="text-2xl font-semibold">Add New Menu Item</h1>
 
-      {/* Form fields for name, description, price, and image */}
-      {['name', 'description', 'price', 'image'].map((field) => (
+      {formFields.map(field => (
         <input
           key={field}
           placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
           className="w-full p-2 border rounded"
-          value={(form as any)[field]}
+          value={form[field]}
           onChange={e => setForm({ ...form, [field]: e.target.value })}
-          required={field !== 'image'} // Make 'image' optional
+          required={field !== 'image'}
         />
       ))}
 
-      {/* Category selection dropdown */}
       <select
         className="w-full p-2 border rounded"
         value={form.category}
@@ -79,45 +87,45 @@ export default function AddMenuItem() {
         ))}
       </select>
 
-      {/* Item Options Section (optional) */}
       <div className="space-y-2">
-        <h2 className="text-lg font-medium">Item Options (e.g. Flavor, Size)</h2>
+        <h2 className="text-lg font-medium">Item Options (e.g. Size, Add-ons)</h2>
         {options.map((option, index) => (
           <div key={index} className="flex gap-2">
             <input
-              placeholder="Label (e.g. Flavor)"
+              placeholder="Option Name (e.g. Large)"
               className="w-1/2 p-2 border rounded"
-              value={option.label}
+              value={option.name}
               onChange={e => {
                 const updated = [...options]
-                updated[index].label = e.target.value
+                updated[index].name = e.target.value
                 setOptions(updated)
               }}
             />
             <input
-              placeholder="Value (e.g. Vanilla)"
+              placeholder="Price (e.g. 1.50)"
               className="w-1/2 p-2 border rounded"
-              value={option.value}
+              type="number"
+              min="0"
+              step="0.01"
+              value={option.price}
               onChange={e => {
                 const updated = [...options]
-                updated[index].value = e.target.value
+                updated[index].price = e.target.value
                 setOptions(updated)
               }}
             />
           </div>
         ))}
 
-        {/* Button to add more options */}
         <button
           type="button"
-          onClick={() => setOptions([...options, { label: '', value: '' }])}
+          onClick={() => setOptions([...options, { name: '', price: '' }])}
           className="text-blue-600 underline"
         >
           + Add Another Option
         </button>
       </div>
 
-      {/* Submit Button */}
       <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 cursor-pointer">
         Add Item
       </button>

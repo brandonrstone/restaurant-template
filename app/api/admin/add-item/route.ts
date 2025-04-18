@@ -1,7 +1,9 @@
 import { prisma } from '@/app/lib/db'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { MenuItem } from '@/app/menu/page'
 
+// This route is ADMIN protected
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions)
 
@@ -11,7 +13,7 @@ export async function POST(req: Request) {
 
   const user = await prisma.user.findUnique({
     where: { email: session.user.email },
-    select: { isAdmin: true },
+    select: { isAdmin: true }
   })
 
   if (!user?.isAdmin) {
@@ -27,12 +29,12 @@ export async function POST(req: Request) {
       data: {
         ...menuItemData,
         options: {
-          create: options?.map((opt: any) => ({
-            label: opt.label,
-            value: opt.value,
-          })) || [],
-        },
-      },
+          create: options?.map((option: MenuItem) => ({
+            name: option.name,
+            price: option.price
+          })) || []
+        }
+      }
     })
 
     return Response.json(item)
